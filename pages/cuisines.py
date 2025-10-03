@@ -129,8 +129,7 @@ def pipeline_dados(caminho_arquivo):
 def filtrar_paises(df, paises_selecionados):
     return df[df['country'].isin(paises_selecionados)]
 
-def filtrar_culinarias(df, culinarias_selecionadas):
-    return df[df['cuisines'].isin(culinarias_selecionadas)]
+# Removido o filtro de culinárias
 
 def obter_filtros_sidebar(df1):
     """Modulariza a obtenção dos filtros da sidebar."""
@@ -141,12 +140,7 @@ def obter_filtros_sidebar(df1):
         default=paises_disponiveis
     )
 
-    culinarias_disponiveis = sorted(df1['cuisines'].unique())
-    culinarias_selecionadas = st.sidebar.multiselect(
-        'Selecione os tipos de culinária',
-        options=culinarias_disponiveis,
-        default=culinarias_disponiveis
-    )
+    # Removido o filtro de tipos de culinária
 
     num_culinarias = st.sidebar.slider(
         'Quantidade máxima de tipos de culinária para exibir nos gráficos',
@@ -164,7 +158,8 @@ def obter_filtros_sidebar(df1):
         step=1
     )
 
-    return paises_selecionados, culinarias_selecionadas, num_culinarias, num_restaurantes
+    # Retorna apenas os filtros necessários
+    return paises_selecionados, num_culinarias, num_restaurantes
 
 # =========================
 # Módulo: Gráficos e Tabelas
@@ -261,11 +256,11 @@ def main():
     df1 = pipeline_dados('data/zomato.csv')
 
     # Filtros na Sidebar
-    paises_selecionados, culinarias_selecionadas, num_culinarias, num_restaurantes = obter_filtros_sidebar(df1)
+    paises_selecionados, num_culinarias, num_restaurantes = obter_filtros_sidebar(df1)
 
     # Filtragem dos dados
     df_filtrado = filtrar_paises(df1, paises_selecionados)
-    df_filtrado = filtrar_culinarias(df_filtrado, culinarias_selecionadas)
+    # Removido o filtro de culinárias
 
     # Exibição
     st.title("Visão Cozinhas")

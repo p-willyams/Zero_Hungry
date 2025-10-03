@@ -125,9 +125,6 @@ def pipeline_dados(caminho_arquivo):
 def filtrar_paises(df, paises_selecionados):
     return df[df['country'].isin(paises_selecionados)]
 
-def filtrar_culinarias(df, culinarias_selecionadas):
-    return df[df['cuisines'].isin(culinarias_selecionadas)]
-
 # ------------------- Funções de gráficos -------------------
 
 def grafico_top_cidades_restaurantes(df, num_cidades):
@@ -229,13 +226,6 @@ def main():
         default=paises_disponiveis
     )
 
-    culinarias_disponiveis = sorted(df1['cuisines'].unique())
-    culinarias_selecionadas = st.sidebar.multiselect(
-        'Selecione os tipos de culinária',
-        options=culinarias_disponiveis,
-        default=culinarias_disponiveis
-    )
-
     num_cidades = st.sidebar.slider(
         'Quantidade máxima de cidades para exibir nos gráficos',
         min_value=1,
@@ -246,7 +236,6 @@ def main():
 
     # Filtragem dos dados
     df_filtrado = filtrar_paises(df1, paises_selecionados)
-    df_filtrado = filtrar_culinarias(df_filtrado, culinarias_selecionadas)
 
     st.title("Visão Cidades")
 
